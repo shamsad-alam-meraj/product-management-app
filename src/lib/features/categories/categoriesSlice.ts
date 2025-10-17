@@ -1,3 +1,4 @@
+import baseUrl from '@/config/baseUrl';
 import type { RootState } from '@/lib/store';
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Category } from '../products/productsSlice';
@@ -21,7 +22,7 @@ export const fetchCategories = createAsyncThunk(
       const state = getState() as RootState;
       const token = state.auth.token;
 
-      const response = await fetch('https://api.bitechx.com/categories', {
+      const response = await fetch(`${baseUrl}/categories`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
