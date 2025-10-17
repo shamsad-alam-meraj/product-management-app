@@ -1,9 +1,9 @@
-import axios from 'axios';
+import baseUrl from '@/config/baseUrl';
 import { store } from '@/lib/store';
+import axios from 'axios';
 import { logout } from '../features/auth/authSlice';
 
-
-const API_BASE_URL = 'https://api.bitechx.com';
+const API_BASE_URL = baseUrl;
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,

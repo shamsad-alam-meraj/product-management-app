@@ -1,4 +1,5 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
+import baseUrl from '@/config/baseUrl';
+import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
   token: string | null;
@@ -18,7 +19,7 @@ const initialState: AuthState = {
 
 export const login = createAsyncThunk('auth/login', async (email: string, { rejectWithValue }) => {
   try {
-    const response = await fetch('https://api.bitechx.com/auth', {
+    const response = await fetch(`${baseUrl}/auth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
