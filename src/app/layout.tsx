@@ -1,4 +1,4 @@
-import StoreProvider from '@/components/providers/store-provider';
+import StoreProvider from '@/components/providers/storeProvider';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
