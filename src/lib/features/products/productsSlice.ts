@@ -1,3 +1,4 @@
+import baseUrl from '@/config/baseUrl';
 import type { RootState } from '@/lib/store';
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
@@ -56,7 +57,7 @@ export const fetchProducts = createAsyncThunk(
       const state = getState() as RootState;
       const token = state.auth.token;
 
-      let url = `https://api.bitechx.com/products?offset=${offset}&limit=${limit}`;
+      let url = `${baseUrl}/products?offset=${offset}&limit=${limit}`;
       if (categoryId) {
         url += `&categoryId=${categoryId}`;
       }
@@ -88,7 +89,7 @@ export const searchProducts = createAsyncThunk(
       const token = state.auth.token;
 
       const response = await fetch(
-        `https://api.bitechx.com/products/search?searchedText=${encodeURIComponent(searchText)}`,
+        `${baseUrl}/products/search?searchedText=${encodeURIComponent(searchText)}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -116,7 +117,7 @@ export const fetchProductBySlug = createAsyncThunk(
       const state = getState() as RootState;
       const token = state.auth.token;
 
-      const response = await fetch(`https://api.bitechx.com/products/${slug}`, {
+      const response = await fetch(`${baseUrl}/products/${slug}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -151,7 +152,7 @@ export const createProduct = createAsyncThunk(
       const state = getState() as RootState;
       const token = state.auth.token;
 
-      const response = await fetch('https://api.bitechx.com/products', {
+      const response = await fetch(`${baseUrl}/products`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -182,7 +183,7 @@ export const updateProduct = createAsyncThunk(
       const state = getState() as RootState;
       const token = state.auth.token;
 
-      const response = await fetch(`https://api.bitechx.com/products/${id}`, {
+      const response = await fetch(`${baseUrl}/products/${id}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -210,7 +211,7 @@ export const deleteProduct = createAsyncThunk(
       const state = getState() as RootState;
       const token = state.auth.token;
 
-      const response = await fetch(`https://api.bitechx.com/products/${id}`, {
+      const response = await fetch(`${baseUrl}/products/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,

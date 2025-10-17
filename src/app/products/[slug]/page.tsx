@@ -59,7 +59,7 @@ export default function ProductDetailsPage() {
     );
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background font-inter">
       <HeaderSection onEdit={handleEdit} onDelete={handleDeleteClick} />
       <main className="container mx-auto px-4 py-8">
         <div className="mx-auto max-w-5xl">

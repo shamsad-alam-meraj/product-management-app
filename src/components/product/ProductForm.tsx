@@ -170,7 +170,7 @@ export default function ProductForm({ mode, product }: ProductFormProps) {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background font-inter">
       {/* Header */}
       <header className="border-b bg-card">
         <div className="container mx-auto flex items-center gap-4 px-4 py-4">
