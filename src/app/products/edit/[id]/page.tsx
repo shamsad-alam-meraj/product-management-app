@@ -2,7 +2,7 @@
 
 import ProductForm from '@/components/product/ProductForm';
 import { useAppSelector } from '@/lib/hooks';
-import { useProducts } from '@/lib/hooks/useProducts';
+import { useProductBySlug } from '@/lib/hooks/useProducts';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -13,9 +13,7 @@ export default function EditProductPage() {
 
   const productId = params.id as string;
 
-  const { data: productsData, isLoading } = useProducts(0, 50);
-  const products = productsData?.data || [];
-  const product = products.find((p) => p.id === productId);
+  const { data: productData, isLoading } = useProductBySlug(productId);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -35,7 +33,7 @@ export default function EditProductPage() {
     );
   }
 
-  if (!product) {
+  if (!productData) {
     return (
       <div className="flex min-h-screen items-center justify-center font-inter">
         <div className="text-center">
@@ -48,5 +46,5 @@ export default function EditProductPage() {
     );
   }
 
-  return <ProductForm mode="edit" product={product} />;
+  return <ProductForm mode="edit" product={productData} />;
 }

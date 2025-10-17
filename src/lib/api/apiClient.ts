@@ -3,7 +3,7 @@ import { store } from '@/lib/store';
 import axios from 'axios';
 import { logout } from '../features/auth/authSlice';
 
-const API_BASE_URL = baseUrl;
+const API_BASE_URL = baseUrl || 'https://api.bitechx.com';
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,

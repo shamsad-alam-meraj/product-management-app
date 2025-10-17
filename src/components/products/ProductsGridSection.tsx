@@ -95,7 +95,7 @@ export default function ProductsGridSection({
                   variant="outline"
                   size="sm"
                   className="flex-1"
-                  onClick={() => router.push(`/products/edit/${product.id}`)}
+                  onClick={() => router.push(`/products/edit/${product.slug}`)}
                 >
                   <Edit className="mr-2 h-4 w-4" /> Edit
                 </Button>

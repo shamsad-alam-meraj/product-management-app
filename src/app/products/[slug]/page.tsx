@@ -40,7 +40,7 @@ export default function ProductDetailsPage() {
   };
 
   const handleEdit = () => {
-    if (currentProduct) router.push(`/products/edit/${currentProduct.id}`);
+    if (currentProduct) router.push(`/products/edit/${currentProduct.slug}`);
   };
 
   if (!isAuthenticated) return null;
