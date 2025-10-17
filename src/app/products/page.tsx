@@ -1,5 +1,6 @@
 'use client';
 
+import ProductListLoading from '@/components/loaders/Products';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,7 +28,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useDebounce } from '@/hooks/useDebounce';
 import { logout } from '@/lib/features/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
@@ -65,11 +65,11 @@ export default function ProductsPage() {
   const debouncedSearchQuery = useDebounce(localSearchQuery, 500);
 
   const offset = (currentPage - 1) * LIMIT;
-  const { data: productsData, isLoading: productsLoading } = useProducts(
-    offset,
-    LIMIT,
-    selectedCategoryId || undefined
-  );
+  const {
+    data: productsData,
+    isLoading: productsLoading,
+    refetch,
+  } = useProducts(offset, LIMIT, selectedCategoryId || undefined);
   const { data: searchData, isLoading: searchLoading } = useSearchProducts(debouncedSearchQuery);
   const { data: categoriesData, isLoading: categoriesLoading } = useCategories();
   const deleteProductMutation = useDeleteProduct();
@@ -103,6 +103,7 @@ export default function ProductsPage() {
 
         setDeleteDialogOpen(false);
         setProductToDelete(null);
+        refetch();
       } catch (error) {
         toast.error('Failed to delete product');
       }
@@ -187,27 +188,7 @@ export default function ProductsPage() {
         </div>
 
         {/* Loading State */}
-        {loading && (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {Array.from({ length: 20 }).map((_, i) => (
-              <Card key={i} className="flex flex-col overflow-hidden animate-pulse">
-                <div className="aspect-square bg-muted" />
-                <CardHeader className="flex-1 p-4">
-                  <Skeleton className="h-5 w-3/4 mb-2" />
-                  <Skeleton className="h-4 w-full" />
-                </CardHeader>
-                <CardContent className="p-4">
-                  <Skeleton className="h-5 w-1/3" />
-                </CardContent>
-                <CardFooter className="flex gap-2 p-4">
-                  <Skeleton className="h-8 w-full" />
-                  <Skeleton className="h-8 w-full" />
-                  <Skeleton className="h-8 w-12" />
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-        )}
+        {loading && <ProductListLoading />}
 
         {/* Products Grid */}
         {!loading && products && (
@@ -281,7 +262,7 @@ export default function ProductsPage() {
             </div>
 
             {/* Pagination */}
-            {!debouncedSearchQuery  && (
+            {!debouncedSearchQuery && (
               <div className="mt-8 flex items-center justify-between w-full">
                 <Button
                   variant="outline"
