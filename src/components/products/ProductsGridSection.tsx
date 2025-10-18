@@ -1,4 +1,5 @@
 'use client';
+import thumbnail from '@/assets/images/thumbnail.png';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -61,14 +62,26 @@ export default function ProductsGridSection({
     <>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {products.map((product) => {
-          const image = product.images?.[0] || '/placeholder.svg?height=300&width=300';
+          const image =
+            product.images && product.images[0] && product.images[0].trim() !== ''
+              ? product.images[0]
+              : thumbnail;
           return (
             <Card
               key={product.id}
               className="flex flex-col overflow-hidden transition-shadow hover:shadow-lg"
             >
               <div className="aspect-square overflow-hidden bg-muted relative">
-                <Image src={image} alt={product.name} fill className="object-cover" unoptimized />
+                <Image
+                  src={image}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                  unoptimized
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = thumbnail.src;
+                  }}
+                />
               </div>
               <CardHeader className="flex-1">
                 <CardTitle className="line-clamp-1 text-lg">{product.name}</CardTitle>
