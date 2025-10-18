@@ -1,5 +1,6 @@
 'use client';
 
+import thumbnail from '@/assets/images/thumbnail.png';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -16,6 +17,7 @@ import type { Product } from '@/lib/api/types';
 import { useCategories } from '@/lib/hooks/useCategories';
 import { useCreateProduct, useUpdateProduct } from '@/lib/hooks/useProducts';
 import { ArrowLeft, Package } from 'lucide-react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { useState } from 'react';
@@ -311,14 +313,20 @@ export default function ProductForm({ mode, product }: ProductFormProps) {
                 {errors.images && touched.images && (
                   <p className="text-sm text-destructive">{errors.images}</p>
                 )}
-                {formData.images && !errors.images && (
-                  <div className="mt-4 overflow-hidden rounded-lg border">
-                    <img
-                      src={formData.images || '/placeholder.svg'}
+                {!errors.images && (
+                  <div className="mt-4 overflow-hidden rounded-lg border relative h-48 w-full">
+                    <Image
+                      src={
+                        formData.images && formData.images.trim() !== ''
+                          ? formData.images
+                          : thumbnail
+                      }
                       alt="Preview"
-                      className="h-48 w-full object-cover"
+                      fill
+                      className="object-cover"
+                      unoptimized
                       onError={(e) => {
-                        e.currentTarget.src = '/placeholder.svg?height=200&width=400';
+                        (e.currentTarget as HTMLImageElement).src = thumbnail.src;
                       }}
                     />
                   </div>

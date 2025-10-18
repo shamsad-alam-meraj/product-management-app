@@ -1,4 +1,5 @@
 'use client';
+import thumbnail from '@/assets/images/thumbnail.png';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Calendar, Package, Tag } from 'lucide-react';
@@ -30,6 +31,11 @@ export default function ProductInfo({ product }: ProductInfoProps) {
       month: 'long',
       day: 'numeric',
     });
+
+  const categoryImage =
+    product.category.image && product.category.image.trim() !== ''
+      ? product.category.image
+      : thumbnail;
 
   return (
     <div className="space-y-6">
@@ -96,11 +102,14 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           <div className="flex items-center gap-4">
             <div className="h-16 w-16 overflow-hidden rounded-lg bg-muted relative">
               <Image
-                src={product.category.image || '/placeholder.svg?height=64&width=64'}
+                src={categoryImage}
                 alt={product.category.name}
                 fill
                 className="object-cover"
                 unoptimized
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = thumbnail.src;
+                }}
               />
             </div>
             <div>
